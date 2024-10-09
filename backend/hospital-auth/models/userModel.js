@@ -15,7 +15,7 @@ const User = sequelize.define(
       allowNull: false,
       unique: true,
       validate: {
-        isEmail: true, // Ensures the format is an email
+        isEmail: true, 
       },
     },
     password: {
@@ -24,7 +24,7 @@ const User = sequelize.define(
     },
     role: {
       type: DataTypes.ENUM("admin", "doctor", "patient"), // You can extend roles as needed
-      defaultValue: "patient", // Default role if not provided
+      defaultValue: "patient", 
     },
   },
   {
