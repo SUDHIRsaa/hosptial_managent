@@ -5,10 +5,9 @@ const User = sequelize.define(
   "User",
   {
     id: {
-      type: DataTypes.STRING,
-      autoIncrement: true,
-      primaryKey: true,
-      defaultValue: true,
+      type: DataTypes.INTEGER, // Change from VARCHAR to INTEGER
+      autoIncrement: true, // Use autoIncrement for integer-based IDs
+      primaryKey: true, // Mark it as the primary key
     },
     email: {
       type: DataTypes.STRING,

@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("./index");
 
 const Staff = sequelize.define(
-  "Doctor",
+  "doctors",
   {
     doctorId: {
       type: DataTypes.STRING(255),

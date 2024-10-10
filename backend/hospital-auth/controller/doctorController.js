@@ -19,7 +19,7 @@ exports.getAllStaff = async (req, res) => {
 exports.getStaffById = async (req, res) => {
   const { id } = req.params;
   try {
-    const staff = await Staff.findOne({ where: { id } });
+    const staff = await Staff.findOne({ where: { doctorId: id } });
     if (!staff) {
       return res.status(404).json({ message: "Staff member not found" });
     }

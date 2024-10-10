@@ -11,10 +11,9 @@ const signToken = (id, role) => {
 
 // Function to create and send JWT token to the user
 const createSendToken = (user, statusCode, res) => {
-  const token = signToken(user.id, user.role);
-
-  // Remove password from output
-  user.password = undefined;
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN || "90d", // Set a default expiration if not provided
+  });
 
   res.status(statusCode).json({
     status: "success",
@@ -28,6 +27,7 @@ const createSendToken = (user, statusCode, res) => {
 // POST: Login user
 exports.login = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password);
 
   // 1) Check if email and password exist
   if (!email || !password) {
@@ -39,8 +39,9 @@ exports.login = async (req, res) => {
   try {
     // 2) Check if user exists && password is correct
     const user = await User.findOne({ where: { email } });
+    console.log(user.dataValues.password, 11);
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user || !(await bcrypt.compare(password, user.dataValues.password))) {
       return res.status(401).json({ message: "Incorrect email or password" });
     }
 
