@@ -9,12 +9,20 @@ const Patient = sequelize.define(
       allowNull: false,
       unique: true,
     },
-    firstName: {
+    fullName: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
+    middleName: {
+      type: DataTypes.STRING(255),
+      allowNull: true, // Optional field
+    },
     lastName: {
       type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    dob: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
     age: {
@@ -24,28 +32,9 @@ const Patient = sequelize.define(
         max: 100,
       },
     },
-    height: {
-      type: DataTypes.FLOAT,
-    },
-    weight: {
-      type: DataTypes.FLOAT,
-    },
-    birthday: {
-      type: DataTypes.DATE,
-    },
-    gender: {
-      type: DataTypes.STRING,
-    },
-    mobile: {
+    phone: {
       type: DataTypes.STRING(15),
       allowNull: false,
-    },
-    whatsapp: {
-      type: DataTypes.STRING(15),
-    },
-    countryCode: {
-      type: DataTypes.STRING(10),
-      defaultValue: "+91",
     },
     email: {
       type: DataTypes.STRING,
@@ -55,28 +44,49 @@ const Patient = sequelize.define(
     },
     address: {
       type: DataTypes.JSON, // For the nested object structure
+      allowNull: false,
     },
-    documentType: {
+    gender: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
-    documentNumber: {
+    language: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    bloodGroup: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    existingId: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    pin: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    profileImage: {
+      type: DataTypes.STRING, // Path to the uploaded image
+      allowNull: true, // Optional field
     },
     createdById: {
       type: DataTypes.STRING, // Mapping `created.by.id`
+      allowNull: true, // Optional field
     },
     createdByName: {
       type: DataTypes.STRING(255), // Mapping `created.by.name`
+      allowNull: true, // Optional field
     },
     modifiedById: {
       type: DataTypes.STRING, // Mapping `modified.by.id`
+      allowNull: true, // Optional field
     },
     modifiedByName: {
       type: DataTypes.STRING(255), // Mapping `modified.by.name`
+      allowNull: true, // Optional field
     },
-    documents: {
-      type: DataTypes.JSON, // For storing document array
-    },
+    
   },
   {
     timestamps: true, // This adds `createdAt` and `updatedAt` fields automatically

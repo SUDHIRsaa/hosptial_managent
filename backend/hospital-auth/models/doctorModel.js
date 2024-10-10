@@ -44,15 +44,12 @@ const Staff = sequelize.define(
       type: DataTypes.STRING(100),
     },
     address: {
-      type: DataTypes.JSON, // Nested object structure can be stored as JSON
+      type: DataTypes.JSON,
     },
     documentType: {
       type: DataTypes.STRING(100),
     },
     documentNumber: {
-      type: DataTypes.STRING(100),
-    },
-    upiId: {
       type: DataTypes.STRING(100),
     },
     bankName: {
@@ -73,7 +70,6 @@ const Staff = sequelize.define(
     createdByName: {
       type: DataTypes.STRING(255),
     },
-
     modifiedById: {
       type: DataTypes.STRING,
     },
@@ -83,16 +79,13 @@ const Staff = sequelize.define(
     profilePic: {
       type: DataTypes.STRING,
     },
-    documents: {
-      type: DataTypes.JSON, // Store documents as an array of objects
-    },
     availableTimeSlot: {
-      type: DataTypes.JSON, // Store availableTimeSlot as JSON for flexibility
+      type: DataTypes.JSON,
     },
   },
   {
     timestamps: true,
-    paranoid: true, // Manually managing created and modified timestamps
+    paranoid: true,
   }
 );
 

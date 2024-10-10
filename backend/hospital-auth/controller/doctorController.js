@@ -31,7 +31,6 @@ exports.getStaffById = async (req, res) => {
   }
 };
 
-
 exports.createStaff = async (req, res) => {
   const {
     doctorId,
@@ -47,7 +46,6 @@ exports.createStaff = async (req, res) => {
     address,
     documentType,
     documentNumber,
-    upiId,
     bankName,
     accountName,
     accountNo,
@@ -55,7 +53,6 @@ exports.createStaff = async (req, res) => {
     createdById,
     createdByName,
     profilePic,
-    documents,
     availableTimeSlot,
   } = req.body;
 
@@ -73,7 +70,6 @@ exports.createStaff = async (req, res) => {
       },
       { transaction: t } // Use transaction
     );
-    console.log("HIII");
 
     // Step 3: Create the Staff record
     const newStaff = await Staff.create(
@@ -91,7 +87,6 @@ exports.createStaff = async (req, res) => {
         address,
         documentType,
         documentNumber,
-        upiId,
         bankName,
         accountName,
         accountNo,
@@ -99,27 +94,22 @@ exports.createStaff = async (req, res) => {
         createdById,
         createdByName,
         profilePic,
-        documents,
         availableTimeSlot,
         userId: newUser.id, // Link staff to the newly created user
       },
       { transaction: t } // Use transaction
     );
 
-    
     await t.commit();
 
-  
     res.status(201).json({
       message: "Staff and User created successfully",
       staff: newStaff,
       user: newUser,
     });
   } catch (error) {
-    
     await t.rollback();
 
-    
     res
       .status(500)
       .json({ message: "Error creating staff member", error: error.message });

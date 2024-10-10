@@ -1,18 +1,17 @@
-const Patient = require("./../models/patientModel"); // Assuming the model is in the models directory
+const Patient = require("./../models/patientModel");
 
-// GET: Retrieve all patients
 exports.getAllPatients = async (req, res) => {
   try {
-    const patients = await Patient.findAll(); // Fetch all patients from the database
+    const patients = await Patient.findAll();
     res.status(200).json(patients);
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error retrieving patients", error: error.message });
+    res.status(500).json({
+      message: "Error retrieving patients",
+      error: error.message,
+    });
   }
 };
 
-// GET: Retrieve a specific patient by patientId
 exports.getPatientById = async (req, res) => {
   const { patientId } = req.params;
   try {
@@ -22,65 +21,114 @@ exports.getPatientById = async (req, res) => {
     }
     res.status(200).json(patient);
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error retrieving patient", error: error.message });
+    res.status(500).json({
+      message: "Error retrieving patient",
+      error: error.message,
+    });
   }
 };
 
-// POST: Create a new patient
 exports.createPatient = async (req, res) => {
   const {
     patientId,
-    firstName,
+    fullName,
+    middleName,
     lastName,
+    dob,
     age,
-    height,
-    weight,
-    birthday,
-    gender,
-    mobile,
-    whatsapp,
-    countryCode,
+    phone,
     email,
     address,
-    documentType,
-    documentNumber,
+    gender,
+    language,
+    bloodGroup,
+    existingId,
+    pin,
     createdById,
     createdByName,
     modifiedById,
     modifiedByName,
-    documents,
   } = req.body;
-
+  const profileImage = req.file ? req.file.path : null;
   try {
     const newPatient = await Patient.create({
       patientId,
-      firstName,
+      fullName,
+      middleName,
       lastName,
+      dob,
       age,
-      height,
-      weight,
-      birthday,
-      gender,
-      mobile,
-      whatsapp,
-      countryCode,
+      phone,
       email,
       address,
-      documentType,
-      documentNumber,
+      gender,
+      language,
+      bloodGroup,
+      existingId,
+      pin,
+      profileImage,
       createdById,
       createdByName,
       modifiedById,
       modifiedByName,
-      documents,
     });
-
-    res.status(201).json(newPatient); // Respond with the newly created patient data
+    res.status(201).json(newPatient);
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error creating patient", error: error.message });
+    console.error('Error creating patient:', error.errors || error.message);
+    res.status(500).json({
+      message: "Error creating patient",
+      error: error.errors ? error.errors.map(err => err.message) : error.message,
+    });
+  }
+};
+
+exports.updatePatient = async (req, res) => {
+  const { patientId } = req.params;
+  const {
+    fullName,
+    middleName,
+    lastName,
+    dob,
+    age,
+    phone,
+    email,
+    address,
+    gender,
+    language,
+    bloodGroup,
+    existingId,
+    pin,
+    modifiedById,
+    modifiedByName,
+  } = req.body;
+  try {
+    const patient = await Patient.findOne({ where: { patientId } });
+    if (!patient) {
+      return res.status(404).json({ message: "Patient not found" });
+    }
+    await patient.update({
+      fullName,
+      middleName,
+      lastName,
+      dob,
+      age,
+      phone,
+      email,
+      address,
+      gender,
+      language,
+      bloodGroup,
+      existingId,
+      pin,
+      modifiedById,
+      modifiedByName,
+    });
+    res.status(200).json({ message: "Patient updated successfully", patient });
+  } catch (error) {
+    console.error('Error updating patient:', error);
+    res.status(500).json({
+      message: "Error updating patient",
+      error: error.message,
+    });
   }
 };
