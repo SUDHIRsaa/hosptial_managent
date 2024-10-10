@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const dotenv = require("dotenv");
+const dotenv = require("./.env");
 const mySqlPool = require("./config/db");
 // const authRoutes = require("./routes/auth"); // Import the auth routes
 // const patientRoutes = require("./routes/Patient"); // Import patient routes
@@ -10,7 +10,7 @@ const doctorRoutes = require("./routes/doctorRoute");
 const patientRoutes = require("./routes/patientRoute");
 const userRoutes = require("./routes/userRoutes");
 const sequelize = require("./models/index");
-dotenv.config();
+// dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8080;
 
