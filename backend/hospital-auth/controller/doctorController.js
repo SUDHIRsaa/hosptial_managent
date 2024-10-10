@@ -31,7 +31,7 @@ exports.getStaffById = async (req, res) => {
   }
 };
 
-// POST: Create a new staff member
+
 exports.createStaff = async (req, res) => {
   const {
     doctorId,
@@ -106,20 +106,20 @@ exports.createStaff = async (req, res) => {
       { transaction: t } // Use transaction
     );
 
-    // Step 4: Commit the transaction if both operations are successful
+    
     await t.commit();
 
-    // Return success response with created staff and user data
+  
     res.status(201).json({
       message: "Staff and User created successfully",
       staff: newStaff,
       user: newUser,
     });
   } catch (error) {
-    // Rollback transaction in case of any error
+    
     await t.rollback();
 
-    // Return error response
+    
     res
       .status(500)
       .json({ message: "Error creating staff member", error: error.message });
