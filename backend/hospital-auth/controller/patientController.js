@@ -49,6 +49,7 @@ exports.createPatient = async (req, res) => {
     modifiedById,
     modifiedByName,
   } = req.body;
+  console.log(req.body)
   const profileImage = req.file ? req.file.path : null;
   try {
     const newPatient = await Patient.create({
